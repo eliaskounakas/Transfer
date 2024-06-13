@@ -1,0 +1,24 @@
+---
+import { supabase } from "../lib/supabase";
+
+const { userId } = Astro.props;
+
+const { data, error } = await supabase.storage.from("private").list(userId + "/", {
+  limit: 100,
+  offset: 0,
+  sortBy: {
+    column: "name",
+    order: "asc",
+  },
+});
+
+if (error) {
+  console.error(error);
+}
+---
+
+<ul id="links">
+    {data?.map((file) => (
+        <li><a href=`https://cseuqirfmbybwrbxjrmy.supabase.co/storage/v1/object/public/private/${userId}/${file.name}`>{file.name}</a></li>
+    ))}
+</ul>

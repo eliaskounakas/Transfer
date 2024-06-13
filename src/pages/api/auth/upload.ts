@@ -1,10 +1,9 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";
-import { v4 as uuidv4 } from "uuid";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   let userId:string = "";
-  
+
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (user !== null) {
@@ -23,8 +22,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   
   const { data, error } = await supabase
   .storage
-  .from('files')
-  .upload(userId + "/" + uuidv4(), file, {
+  .from('private')
+  .upload(userId + "/" + file.name, file, {
     cacheControl: '3600',
     upsert: false
   })
