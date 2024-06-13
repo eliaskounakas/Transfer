@@ -1,5 +1,6 @@
 ---
 import { supabase } from "../lib/supabase";
+const files = import.meta.env.SUPABASE_FILE_KEY;
 
 const { userId } = Astro.props;
 
@@ -20,7 +21,7 @@ if (error) {
 <p class="mt-10">Your files:</p>
 <ul class="flex flex-col my-5 space-y-2 max-w-lg">
     {data?.map((file) => (
-        <li class="truncate" ><a class="text-sky-400 " href=`https://cseuqirfmbybwrbxjrmy.supabase.co/storage/v1/object/public/private/${userId}/${file.name}`>{file.name}</a></li>
+        <li class="truncate" ><a class="text-sky-400 " href=`${files}/${userId}/${file.name}`>{file.name}</a></li>
     ))}
 </ul>
 
